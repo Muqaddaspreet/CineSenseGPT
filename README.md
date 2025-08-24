@@ -15,6 +15,8 @@ If you are developing a production application, we recommend using TypeScript wi
 
 - Configured Vite
 - Installed Tailwind CSS
+- Header
+- Logion Form
 
 # Features
 

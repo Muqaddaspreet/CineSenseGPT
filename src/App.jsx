@@ -1,7 +1,14 @@
 import "./App.css";
+import Body from "./components/Body";
+import Header from "./components/Header";
 
 function App() {
-  return <div className="bg-amber-600">Hello World!</div>;
+  return (
+    <div>
+      {/* <Header /> */}
+      <Body />
+    </div>
+  );
 }
 
 export default App;
