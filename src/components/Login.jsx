@@ -1,10 +1,19 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
+import { useNavigate } from "react-router-dom";
+// import userIcon from "../assets/netflix-red-icon.png";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isSignInForm, setSignInForm] = useState(true);
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const _name = useRef(null);
   const email = useRef(null);
@@ -20,9 +29,68 @@ const Login = () => {
       password.current.value ?? "",
       isSignInForm
     );
-    setErrorMessage(message);
+    setErrorMsg(message);
+
+    if (message) return;
 
     // Proceed with Sign In/ Sign Up
+    if (!isSignInForm) {
+      // Sign Up logic:
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+
+          updateProfile(user, {
+            // To update the user profile with its name and photo url.
+            displayName: _name.current.value,
+            photoURL:
+              "https://i.pinimg.com/736x/d7/19/6a/d7196adc7c4f353d52235c5e6ed12e65.jpg",
+          })
+            .then(() => {
+              // Profile updated!
+              // ...
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+              setErrorMsg(error);
+            });
+
+          navigate("/browse"); // Navigate to this route after storing user details in the store.
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMsg(errorCode + "- " + errorMessage);
+          // ..
+        });
+    } else {
+      // Sign In logic:
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          navigate("/browse"); // Navigate to this route after storing user details in the store.
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMsg(errorCode + "- " + errorMessage);
+        });
+    }
   };
 
   const toggleSignInForm = () => {
@@ -66,7 +134,7 @@ const Login = () => {
           placeholder="Password"
           className="p-4 my-2 text-white font-bold w-full rounded-md border border-white"
         />
-        <p className="text-red-600">{errorMessage}</p>
+        <p className="text-red-600">{errorMsg}</p>
         <button
           type="button"
           className="font-bold my-2 p-2 rounded-md text-white bg-red-600 w-full cursor-pointer"

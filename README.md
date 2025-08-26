@@ -21,6 +21,14 @@ If you are developing a production application, we recommend using TypeScript wi
 - Signup Form
 - Form validations
 - useRef Hook
+- Firebase Setup
+- Deploying our app to production
+- Create Sign Up user account in firebase
+- Implement Sign In user api
+- Created Redux store With userSlice
+- Implemented Sign out
+- Update profile api
+- Fetch from Tmdb movies
 
 # Features
 
