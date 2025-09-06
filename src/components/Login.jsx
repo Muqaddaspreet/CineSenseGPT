@@ -8,10 +8,13 @@ import {
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 // import userIcon from "../assets/netflix-red-icon.png";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
 
@@ -55,6 +58,17 @@ const Login = () => {
             .then(() => {
               // Profile updated!
               // ...
+              // const { uid, email, displayName, photoURL } = user; // But unlike the onAuthStateChanged api in Body.jsx,uid, email, displayName, and photoURL should not come from this user, as this user is not updated. So, we should get the updated value from our auth() -> which is like a utility function, by doing auth.currentUser.
+
+              const { uid, email, displayName, photoURL } = auth.currentUser; // This represents the updated value of the user, And not the old creational ones.
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
             })
             .catch((error) => {
               // An error occurred

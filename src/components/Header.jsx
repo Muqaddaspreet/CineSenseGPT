@@ -29,7 +29,7 @@ const Header = () => {
           <img
             className="w-10 h-10 p-1 mx-2 rounded-lg my-4"
             alt="userIcon"
-            src={_user.photoURL}
+            src={_user?.photoURL}
           />
           <button
             onClick={handleSignOut}
