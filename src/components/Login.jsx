@@ -7,13 +7,14 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 // import userIcon from "../assets/netflix-red-icon.png";
+import { USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isSignInForm, setSignInForm] = useState(true);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -49,11 +50,10 @@ const Login = () => {
           const user = userCredential.user;
           console.log(user);
 
+          // To update the user profile with its name and photo url.
           updateProfile(user, {
-            // To update the user profile with its name and photo url.
             displayName: _name.current.value,
-            photoURL:
-              "https://i.pinimg.com/736x/d7/19/6a/d7196adc7c4f353d52235c5e6ed12e65.jpg",
+            photoURL: USER_AVATAR,
           })
             .then(() => {
               // Profile updated!
@@ -76,7 +76,7 @@ const Login = () => {
               setErrorMsg(error);
             });
 
-          navigate("/browse"); // Navigate to this route after storing user details in the store.
+          // navigate("/browse"); // Navigate to this route after storing user details in the store.
           // ...
         })
         .catch((error) => {
@@ -96,7 +96,7 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse"); // Navigate to this route after storing user details in the store.
+          // navigate("/browse"); // Navigate to this route after storing user details in the store.
           // ...
         })
         .catch((error) => {

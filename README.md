@@ -29,6 +29,12 @@ If you are developing a production application, we recommend using TypeScript wi
 - Implemented Sign out
 - Update profile api
 - Fetch from Tmdb movies
+- Bugfix: Sign up user displayName and profile picture update
+- BugFix: if the user is not logged in -> Redirect /browse to Login Page and vice-versa.
+- Unsubscribe to the onAuthStateChanged() callback.
+- Add hardcoded values to the constants file.
+- Regiter TMDB API & create an app & get access token.
+- Get Data from TMDB now playing movies list API.
 
 # Features
 
