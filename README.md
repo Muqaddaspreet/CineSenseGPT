@@ -35,6 +35,14 @@ If you are developing a production application, we recommend using TypeScript wi
 - Add hardcoded values to the constants file.
 - Regiter TMDB API & create an app & get access token.
 - Get Data from TMDB now playing movies list API.
+- Custom hook for now playing movies
+- Create movieSlice
+- Update store with movies data
+- Planning for mainContainer and secondaryContainer
+- Fetch data for Trailer video
+- Update store with Trailer video data
+- Embedded the youtube video and make it autoplay and mute
+- Add tailwind classes to make MainContainer look awesome
 
 # Features
 
