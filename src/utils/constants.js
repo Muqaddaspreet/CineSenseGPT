@@ -1,3 +1,6 @@
+export const BG_URL =
+  "https://assets.nflxext.com/ffe/siteui/vlv3/3e4bd046-85a3-40e1-842d-fa11cec84349/web/CA-en-20250818-TRIFECTA-perspective_70fc89e5-1ac0-4f15-b08a-b8e9ba4eaa19_large.jpg";
+
 export const USER_AVATAR =
   "https://i.pinimg.com/736x/d7/19/6a/d7196adc7c4f353d52235c5e6ed12e65.jpg";
 
@@ -18,3 +21,10 @@ export const TMDB_ENDPOINTS = {
 };
 
 export const IMG_CDN = "https://image.tmdb.org/t/p/w780";
+
+export const SUPPORTED_LANGUAGES = [
+  { identifier: "en", name: "English" },
+  { identifier: "punjabi", name: "Punjabi" },
+  { identifier: "french", name: "French" },
+  { identifier: "spanish", name: "Spanish" },
+];

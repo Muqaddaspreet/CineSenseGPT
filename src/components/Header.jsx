@@ -8,10 +8,14 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { useEffect } from "react";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { SUPPORTED_LANGUAGES } from "../utils/constants";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const showGptSearch = useSelector((store) => store.gpt.showGptSearch);
   const _user = useSelector((store) => store.user);
   const handleSignOut = () => {
     signOut(auth)
@@ -49,14 +53,25 @@ const Header = () => {
         navigate("/");
       }
 
+      // Unsubscribe from component unmounts
       return () => {
         unsubscribe();
       };
     });
   }, []);
-  // Here, we used this event Bismarck function to cheque the authorization. So if the user is logged in, The store will be set up and user redirected to the browse page.
+  // Here, we used this event Bismarck function to check the authorization. So if the user isFor toggling the button inside The header logged in, The store will be set up and user redirected to the browse page.
   // If the user is logged out, it removes the user from the store.
   // But this is the place where we should navigate, i.e. when the user is logged in and gets into the store.
+
+  const handleGptSearchClick = () => {
+    // Toggle GPT Search
+    dispatch(toggleGptSearchView()); // We dispatch an action to the store.
+  };
+
+  const handleLanguageChange = (e) => {
+    console.log(e.target.value);
+    dispatch(changeLanguage(e.target.value));
+  };
 
   return (
     <div className="z-30 absolute flex justify-between bg-gradient-to-b from-black w-full">
@@ -64,14 +79,38 @@ const Header = () => {
 
       {_user && (
         <div className="flex m-2 ">
+          {showGptSearch && ( // Only show when showGptSearch value is true.
+            <select
+              className="p-2 w-22 bg-gray-900 text-white mx-2 my-4 z-80 rounded-lg"
+              onChange={handleLanguageChange}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => {
+                return (
+                  <option
+                    className="z-100"
+                    key={lang.identifier}
+                    value={lang.identifier}
+                  >
+                    {lang.name}
+                  </option>
+                );
+              })}
+            </select>
+          )}
+          <button
+            className="h-10 px-2 mx-2 my-4 bg-purple-800 text-white rounded-lg hover:bg-purple-800/85 cursor-pointer"
+            onClick={handleGptSearchClick}
+          >
+            {showGptSearch ? "🏠Home" : "🔍GPT Search"}
+          </button>
           <img
-            className="w-10 h-10 p-1 mx-2 rounded-lg my-4"
+            className="w-10 h-10 mx-2 rounded-lg my-4"
             alt="userIcon"
             src={_user?.photoURL}
           />
           <button
             onClick={handleSignOut}
-            className="rounded-md px-2 my-5 font-bold bg-red-600 text-white cursor-pointer"
+            className="rounded-md px-2 my-4 font-bold bg-red-600 text-white cursor-pointer hover:bg-red-600/85"
           >
             Sign Out
           </button>

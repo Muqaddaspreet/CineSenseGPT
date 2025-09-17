@@ -11,7 +11,7 @@ import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 // import userIcon from "../assets/netflix-red-icon.png";
-import { USER_AVATAR } from "../utils/constants";
+import { BG_URL, USER_AVATAR } from "../utils/constants";
 
 const Login = () => {
   // const navigate = useNavigate();
@@ -115,11 +115,7 @@ const Login = () => {
     <div>
       <Header />
       <div>
-        <img
-          className="absolute"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/3e4bd046-85a3-40e1-842d-fa11cec84349/web/CA-en-20250818-TRIFECTA-perspective_70fc89e5-1ac0-4f15-b08a-b8e9ba4eaa19_large.jpg"
-          alt="logo"
-        ></img>
+        <img className="absolute" src={BG_URL} alt="logo"></img>
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
