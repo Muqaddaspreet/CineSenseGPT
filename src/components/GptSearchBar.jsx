@@ -1,12 +1,23 @@
 import React, { useRef } from "react";
-import { BG_URL } from "../utils/constants";
+import { BG_URL, TMDB_HEADERS } from "../utils/constants";
 import lang from "../utils/languageConstants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import openai from "../utils/openai";
+import { addGptMovieResult } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
+  const dispatch = useDispatch();
   const langKey = useSelector((store) => store.config.lang);
   const searchText = useRef(null);
+
+  const searchmovieTMDB = async (movie) => {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/search/movie?query=+ ${movie} +&include_adult=false&language=en-US&page=1`,
+      { headers: TMDB_HEADERS }
+    );
+    const json = await data.json();
+    return json.results;
+  };
 
   const handleGptSearchClick = async () => {
     console.log(searchText.current.value);
@@ -18,12 +29,23 @@ const GptSearchBar = () => {
       "The queary will be similar to something like funny indian retro movies. You just provide movie names withour question.";
     const gptResults = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
-      messages: [
-        { role: "developer", content: gptQuery },
-        { role: "user", content: "Are semicolons optional in JavaScript?" },
-      ],
+      messages: [{ role: "developer", content: gptQuery }],
     });
-    console.log(gptResults.choices);
+    if (!gptResults.choices) {
+      // TODO: Write Error Handling
+    }
+    console.log(gptResults.choices?.[0]?.message.content);
+    const gptMovies = gptResults.choices?.[0]?.message.content.split(",");
+
+    // For each movie we will search tmdb api:
+    const promiseArray = gptMovies.map((movie) => searchmovieTMDB(movie));
+    // We will get [Promise, Promise, Promise, Promise,Promise]
+    const tmdbResults = await Promise.all(promiseArray);
+    console.log(tmdbResults);
+
+    dispatch(
+      addGptMovieResult({ movieNames: gptMovies, movieResults: tmdbResults })
+    );
   };
 
   return (
@@ -45,7 +67,7 @@ const GptSearchBar = () => {
             placeholder={lang[langKey].gptSearchPlaceholder} // Trying to put other languages.
           />
           <button
-            className="h-10 col-span-3 py-2 px-4 rounded-lg bg-red-600 font-bold text-white hover:bg-red-600/80"
+            className="h-10 col-span-3 py-2 px-4 rounded-lg bg-red-600 font-bold text-white hover:bg-red-600/80 cursor-pointer"
             onClick={handleGptSearchClick}
           >
             {lang[langKey].search} {/* Trying to put other languages.*/}
