@@ -4,12 +4,15 @@ import {
   TMDB_HEADERS,
   TMDB_ENDPOINTS,
 } from "../utils/constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTopRatedMovies } from "../utils/moviesSlice";
 
 const useTopRatedMovies = () => {
   // Fetch data from TMDB API and update store.
   const dispatch = useDispatch();
+
+  const topRatedMovies = useSelector((store) => store.movies.topRatedMovies);
+
   const getNowPlayingMovies = async (page = 1) => {
     const data = await fetch(
       `${TMDB_BASE_URL}/top_rated?${TMDB_ENDPOINTS.movieChanges(page)}`,
@@ -22,7 +25,8 @@ const useTopRatedMovies = () => {
     dispatch(addTopRatedMovies(json?.results));
   };
   useEffect(() => {
-    getNowPlayingMovies();
+    // If we have topRatedMovies in the store, we will not make an api call.
+    !topRatedMovies && getNowPlayingMovies();
   }, []);
 };
 
