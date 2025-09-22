@@ -52,12 +52,12 @@ const GptSearchBar = () => {
     <>
       {/*Background Image*/}
       <div>
-        <img className="absolute z-15" src={BG_URL}></img>
+        <img className="absolute z-15 h-screen object-cover" src={BG_URL}></img>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center pt-[19%] md:pt-[3%]">
         {/*Search form*/}
         <form
-          className="z-50 mt-[9%] w-1/2 py-4 px-4  mx-6 bg-black shadow-2xl grid-cols-12 flex justify-center"
+          className="z-50 mt-[9%] w-full md:w-1/2 py-4 px-4 bg-black shadow-2xl grid-cols-12 flex justify-center"
           onSubmit={(e) => e.preventDefault()} // To prevent reload on the click of the submit button in the form.
         >
           <input

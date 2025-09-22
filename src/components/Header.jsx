@@ -74,14 +74,14 @@ const Header = () => {
   };
 
   return (
-    <div className="z-30 absolute flex justify-between bg-gradient-to-b from-black w-full">
-      <img className="w-40 m-6" src={logo} alt="logo" />
+    <div className="z-30 absolute flex flex-col justify-center md:justify-between bg-gradient-to-b md:flex-row from-black w-full ">
+      <img className="w-40 mt-6 mx-auto md:m-6" src={logo} alt="logo" />
 
       {_user && (
-        <div className="flex m-2 ">
+        <div className="flex m-2 justify-center">
           {showGptSearch && ( // Only show when showGptSearch value is true.
             <select
-              className="p-2 w-22 bg-gray-900 text-white mx-2 my-4 z-80 rounded-lg"
+              className="p-1 md:py-2 font-bold w-22 h-7 md:h-10 bg-gray-900 text-white my-0 md:my-4 z-80 rounded-lg text-sm md:text-lg"
               onChange={handleLanguageChange}
             >
               {SUPPORTED_LANGUAGES.map((lang) => {
@@ -98,19 +98,19 @@ const Header = () => {
             </select>
           )}
           <button
-            className="h-10 px-2 mx-2 my-4 bg-purple-800 text-white rounded-lg hover:bg-purple-800/85 cursor-pointer"
+            className="h-7 md:h-10 px-2 ml-2 my-0 md:my-4 bg-purple-800 text-white rounded-lg hover:bg-purple-800/85 cursor-pointer text-sm md:text-lg font-bold"
             onClick={handleGptSearchClick}
           >
             {showGptSearch ? "🏠Home" : "🔍GPT Search"}
           </button>
           <img
-            className="w-10 h-10 mx-2 rounded-lg my-4"
+            className="w-7 md:w-10 h-7 md:h-10 mx-2 rounded-lg my-0 md:my-4"
             alt="userIcon"
             src={_user?.photoURL}
           />
           <button
             onClick={handleSignOut}
-            className="rounded-md px-2 my-4 font-bold bg-red-600 text-white cursor-pointer hover:bg-red-600/85"
+            className="rounded-md px-2 my-0 md:my-4 font-bold bg-red-600 text-white text-sm md:text-lg cursor-pointer hover:bg-red-600/85"
           >
             Sign Out
           </button>

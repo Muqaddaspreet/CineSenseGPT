@@ -51,7 +51,14 @@ If you are developing a production application, we recommend using TypeScript wi
 - Made custom hooks for UsePopularMovies, UseTopRatedMovies, UseUpcomingMovies
 - GPT Search feature wiith GPT Search page and GPT Search Bar
 - (BONUS) Multi-language feature in our app
-- Integrate GPT APIs
+- Integrate GPT APIs using API keys
+- GPT Search API call
+- Fetched gptMovieSuggestions from TMDB
+- created gptSlice and added data to the store
+- Reused Movie List component to make movie suggestion container
+- Memoization
+- Created and added .env file and added to .gitignore
+- Made our site responsive using tailwind css
 
 # Features
 
