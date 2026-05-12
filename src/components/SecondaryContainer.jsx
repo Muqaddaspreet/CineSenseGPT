@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 
 const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movies);
-  console.log("Secondary", movies);
   return (
     movies.nowPlayingMovies && ( // We can put a check that only returns secondary component if we have movies data present.
       <div className="mt-0 md:-mt-0 lg:-mt-80 relative z-20">

@@ -25,13 +25,13 @@ const Login = () => {
 
   const handleButtonClick = () => {
     // Validate the form data
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
     const message = checkValidData(
       _name.current?.value ?? "",
       email.current.value ?? "",
       password.current.value ?? "",
-      isSignInForm
+      isSignInForm,
     );
     setErrorMsg(message);
 
@@ -43,12 +43,12 @@ const Login = () => {
       createUserWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
       )
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user);
+          // console.log(user);
 
           // To update the user profile with its name and photo url.
           updateProfile(user, {
@@ -67,7 +67,7 @@ const Login = () => {
                   email: email,
                   displayName: displayName,
                   photoURL: photoURL,
-                })
+                }),
               );
             })
             .catch((error) => {
@@ -90,7 +90,7 @@ const Login = () => {
       signInWithEmailAndPassword(
         auth,
         email.current.value,
-        password.current.value
+        password.current.value,
       )
         .then((userCredential) => {
           // Signed in
@@ -109,7 +109,7 @@ const Login = () => {
 
   const toggleSignInForm = () => {
     setSignInForm(!isSignInForm);
-    console.log(isSignInForm);
+    // console.log(isSignInForm);
   };
   return (
     <div>
