@@ -25,7 +25,7 @@ const usePopularMovies = () => {
     dispatch(addPopularMovies(json?.results));
   };
   useEffect(() => {
-    // If we have nowPlayingMovies in the store, we will not make an api call.
+    // If we have popularMovies in the store, we will not make an api call.
     !popularMovies && getPopularMovies();
   }, []);
 };
